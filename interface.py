@@ -1,7 +1,9 @@
 from tkinter import *
 from PIL import Image, ImageTk
+from cv2 import circle
 import networkx as nx
 import matplotlib.pyplot as plt
+from pyrsistent import b
 
 # instancia o grafo
 Brasil = nx.DiGraph()
@@ -334,7 +336,7 @@ root.geometry('1000x800')
 root.config(background='White')
 root.resizable(width=False, height=False)
 
-imag_1 = Image.open('background.jpg')
+imag_1 = Image.open('background2.jpg')
 
 imag_1 = ImageTk.PhotoImage(imag_1)
 
@@ -525,23 +527,23 @@ def caminhoneiro():
     background.grid(row=1, column=0, columnspan=3)
 
     buttonEncontrar = Button(root, text='Encontrar a melhor rota para o meu destino',
-                             padx=117, pady=5, fg='white', bg='black', command=lambda: encontrar())
+                             padx=117, pady=5, fg='black', bg='#A8A8A8', border=5, command=lambda: encontrar())
     buttonEncontrar.place(relx=0.5, rely=0.1, anchor=CENTER)
 
     buttonAtivas = Button(root, text='Saber quais estradas estão ativas', padx=117,
-                          pady=5, fg='white', bg='black', command=lambda: estradas_ativas(1))
+                          pady=5, fg='black', bg='#A8A8A8', border=5, command=lambda: estradas_ativas(1))
     buttonAtivas.place(relx=0.5, rely=0.2, anchor=CENTER)
 
     buttonInativas = Button(root, text='Saber quais estradas estão inativas', padx=117,
-                            pady=5, fg='white', bg='black', command=lambda: estradas_inativas(1))
+                            pady=5, fg='black', bg='#A8A8A8', border=5, command=lambda: estradas_inativas(1))
     buttonInativas.place(relx=0.5, rely=0.3, anchor=CENTER)
 
     buttonMapa = Button(root, text='Ver um mapa com estradas atuais', padx=117,
-                        pady=5, fg='white', bg='black', command=lambda: imprime_mapa())
+                        pady=5, fg='black', bg='#A8A8A8', border=5, command=lambda: imprime_mapa())
     buttonMapa.place(relx=0.5, rely=0.4, anchor=CENTER)
 
     buttonVoltar = Button(root, text='Voltar', padx=117,
-                          pady=5, fg='white', bg='black', command=menu)
+                          pady=5, fg='black', bg='#A8A8A8', border=5, command=menu)
     buttonVoltar.place(relx=0.5, rely=0.7, anchor=CENTER)
 
 
@@ -553,27 +555,27 @@ def fiscal():
     background.grid(row=1, column=0, columnspan=3)
 
     buttonInativar = Button(root, text='Inativar uma estrada', padx=117,
-                            pady=5, fg='white', bg='black', command=lambda: inativar())
+                            pady=5, fg='black', bg='#A8A8A8', border=5, command=lambda: inativar())
     buttonInativar.place(relx=0.5, rely=0.1, anchor=CENTER)
 
     buttonReativar = Button(root, text='Reativar uma estrada', padx=117,
-                            pady=5, fg='white', bg='black', command=lambda: reativar())
+                            pady=5, fg='black', bg='#A8A8A8', border=5, command=lambda: reativar())
     buttonReativar.place(relx=0.5, rely=0.2, anchor=CENTER)
 
     buttonAtivas = Button(root, text='Saber quais estradas estão ativas', padx=117,
-                          pady=5, fg='white', bg='black', command=lambda: estradas_ativas(0))
+                          pady=5, fg='black', bg='#A8A8A8', border=5, command=lambda: estradas_ativas(0))
     buttonAtivas.place(relx=0.5, rely=0.3, anchor=CENTER)
 
     buttonInativas = Button(root, text='Saber quais estradas estão inativas', padx=117,
-                            pady=5, fg='white', bg='black', command=lambda: estradas_inativas(0))
+                            pady=5, fg='black', bg='#A8A8A8', border=5, command=lambda: estradas_inativas(0))
     buttonInativas.place(relx=0.5, rely=0.4, anchor=CENTER)
 
     buttonMapa = Button(root, text='Ver um mapa com estradas atuais', padx=117,
-                        pady=5, fg='white', bg='black', command=lambda: imprime_mapa())
+                        pady=5, fg='black', bg='#A8A8A8', border=5, command=lambda: imprime_mapa())
     buttonMapa.place(relx=0.5, rely=0.5, anchor=CENTER)
 
     buttonVoltar = Button(root, text='Voltar', padx=117,
-                          pady=5, fg='white', bg='black', command=menu)
+                          pady=5, fg='black', bg='#A8A8A8', border=5, command=menu)
     buttonVoltar.place(relx=0.5, rely=0.7, anchor=CENTER)
 
 
@@ -598,17 +600,17 @@ def menu():
     placa_label.grid(column=0, row=1)
     placa_label.place(relx=0.5, rely=0.4, anchor=CENTER)
 
-    buttonCaminhoneiro = Button(root, text='Caminhoneiro', padx=85,
-                                pady=5, fg='white', bg='black', command=caminhoneiro)
+    buttonCaminhoneiro = Button(root, text='Caminhoneiro', padx=30,
+                                pady=5, fg='black', bg='#A8A8A8', border=5, command=caminhoneiro)
     buttonCaminhoneiro.place(relx=0.5, rely=0.6, anchor=CENTER)
 
-    buttonFiscal = Button(root, text='Fiscal do DER', padx=85,
-                          pady=5, fg='white', bg='black', command=fiscal)
+    buttonFiscal = Button(root, text='Fiscal do DER', padx=30,
+                          pady=5, fg='black', bg='#A8A8A8', border=5, command=fiscal)
     buttonFiscal.place(relx=0.5, rely=0.7, anchor=CENTER)
 
-    buttonSaida = Button(root, text='Sair', padx=85, pady=5,
-                         fg='white', bg='black', command=root.quit)
-    buttonSaida.place(relx=0.5, rely=0.9, anchor=CENTER)
+    buttonSaida = Button(root, text='Sair', padx=30, pady=5,
+                         fg='black', bg='#A8A8A8', border=5, command=root.quit)
+    buttonSaida.place(relx=0.5, rely=0.8, anchor=CENTER)
 
 
 menu()
