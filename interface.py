@@ -162,42 +162,54 @@ def retorna_nome_estado(cod):
     return estado
 
 
-def dijkstra(adj, source, target):
+def dijkstra(grafo, origem, destino):
+
     INF = ((1 << 63) - 1)//2
-    pred = {x: x for x in adj}
-    dist = {x: INF for x in adj}
-    dist[source] = 0
+    antecessor = {i: i for i in grafo}
+    distancia = {i: INF for i in grafo}
+    distancia[origem] = 0
+
     PQ = []
-    heapq.heappush(PQ, [dist[source], source])
+    heapq.heappush(PQ, [distancia[origem], origem])
 
     while(PQ):
-        u = heapq.heappop(PQ)  # u is a tuple [u_dist, u_id]
+
+        u = heapq.heappop(PQ)
         u_dist = u[0]
         u_id = u[1]
-        if u_dist == dist[u_id]:
-            # if u_id == target:
-            #    break
-            for v in adj[u_id]:
+
+        if u_dist == distancia[u_id]:
+
+            for v in grafo[u_id]:
+
                 v_id = v[0]
                 w_uv = v[1]
-                if dist[u_id] + w_uv < dist[v_id]:
-                    dist[v_id] = dist[u_id] + w_uv
-                    heapq.heappush(PQ, [dist[v_id], v_id])
-                    pred[v_id] = u_id
 
-    if dist[target] == INF:
-        path = str("Não há caminho entre", source, "e", target)
-        return path
+                if distancia[u_id] + w_uv < distancia[v_id]:
+
+                    distancia[v_id] = distancia[u_id] + w_uv
+                    heapq.heappush(PQ, [distancia[v_id], v_id])
+                    antecessor[v_id] = u_id
+
+    if distancia[destino] == INF:
+
+        caminho = str("Não há caminho entre", origem, "e", destino)
+        return caminho
+
     else:
+
         st = []
-        node = target
+        no = destino
+
         while(True):
-            st.append(str(node))
-            if(node == pred[node]):
+
+            st.append(str(no))
+            if(no == antecessor[no]):
                 break
-            node = pred[node]
-        path = st[::-1]
-        return path
+            no = antecessor[no]
+
+        caminho = st[::-1]
+        return caminho
 
 
 def bfs(grafo, inicio, fim):
@@ -232,10 +244,36 @@ def estados_ligados(estado):
 
 def imprime_mapa():
 
-    nx.draw_spring(Brasil, with_labels=1, node_size=300, font_size=8, width=2, style="solid", node_color="green",
-                   font_color="white", font_weight="bold", edge_color="gray")
+    fluxo_livre = [(u, v)
+                   for (u, v, d) in Brasil.edges(data=True) if d["weight"] == 1]
+    moderado = [(u, v)
+                for (u, v, d) in Brasil.edges(data=True) if d["weight"] == 1.6]
+    pesado = [(u, v)
+              for (u, v, d) in Brasil.edges(data=True) if d["weight"] == 2.5]
+    congestionamento = [(u, v) for (u, v, d) in Brasil.edges(
+        data=True) if d["weight"] == 5]
+
+    pos = nx.spring_layout(Brasil, seed=9)  # melhores: 3, 9, 20
+
+    nx.draw_networkx_nodes(Brasil, pos, node_size=300, node_color="gray")
+
+    nx.draw_networkx_edges(Brasil, pos, edgelist=fluxo_livre,
+                           width=2, alpha=1, edge_color="green", style="solid", connectionstyle="arc3, rad=0.05")
+    nx.draw_networkx_edges(Brasil, pos, edgelist=moderado,
+                           width=2, alpha=1, edge_color="yellow", style="solid", connectionstyle="arc3, rad=0.05")
+    nx.draw_networkx_edges(Brasil, pos, edgelist=pesado,
+                           width=2, alpha=1, edge_color="orange", style="solid", connectionstyle="arc3, rad=0.05")
+    nx.draw_networkx_edges(Brasil, pos, edgelist=congestionamento,
+                           width=2, alpha=1, edge_color="red", style="solid", connectionstyle="arc3, rad=0.05")
+
+    nx.draw_networkx_labels(Brasil, pos, font_size=10,
+                            font_family="sans-serif", font_weight="bold")
+
+    ax = plt.gca()
+    ax.margins(0.08)
+    plt.axis("off")
+    plt.tight_layout()
     plt.show()
-    return
 
 
 lista_estradas_inativas = []
@@ -361,16 +399,40 @@ def mostra_estradas_transito():
     return lista_final
 
 
+def mostra_estradas_transito_ruim():
+
+    lista_estradas = list(Brasil.edges.data())
+
+    if len(lista_estradas) == 0:
+        return '\nNão há estradas ativas.\n'
+
+    lista_final = []
+    lista_final.append('Estradas ativas:\n')
+    for i in range(len(lista_estradas)):
+        if lista_estradas[i][2]['weight'] > 1:
+            lista_final.append(str(i) + '. ' + str(lista_estradas[i][0]) + ' -> ' + str(
+                lista_estradas[i][1]) + ' - ' + str(traduz_transito(lista_estradas[i][2]['weight'])))
+
+    if len(lista_final) > 1:
+        lista_final = ('\n'.join(lista_final))
+        return lista_final
+
+    else:
+        lista_final = str(
+            'Neste momento não há estradas com trânsito ruim! :D')
+        return lista_final
+
+
 def sinaliza_transito(estado1, estado2, velo):
     Brasil.remove_edge(estado1, estado2)
 
-    if int(velo) == 100:
+    if int(velo) >= 100:
         velocidade = 1
-    elif int(velo) == 60:
+    elif int(velo) >= 60 and int(velo) < 100:
         velocidade = 1.6
-    elif int(velo) == 40:
+    elif int(velo) >= 40 and int(velo) < 60:
         velocidade = 2.5
-    elif int(velo) == 20:
+    elif int(velo) < 40:
         velocidade = 5
 
     Brasil.add_edge(estado1, estado2, weight=velocidade)
@@ -391,13 +453,13 @@ def pergunta_sinalizar_transito(x, velocidade):
 
     sinaliza_transito(estado_origem, estado_final, velocidade)
 
-    if int(velocidade) == 100:
+    if int(velocidade) >= 100:
         velo = 1
-    elif int(velocidade) == 60:
+    elif int(velocidade) >= 60 and int(velocidade) < 100:
         velo = 1.6
-    elif int(velocidade) == 40:
+    elif int(velocidade) >= 40 and int(velocidade) < 60:
         velo = 2.5
-    elif int(velocidade) == 20:
+    elif int(velocidade) < 40:
         velo = 5
 
     lista_final.append('\n' + str(traduz_transito(velo)) + '(' + str(velocidade) + ' km/h) foi sinalizado na estrada que liga ' + estado_origem +
@@ -490,9 +552,29 @@ def visualiza_transito(x):
     background = Label(image=imag_1)
     background.grid(row=1, column=0, columnspan=3)
 
-    text = Text(root, width=30, height=30, fg='snow', bg='black')
+    text = Text(root, width=31, height=30, fg='snow', bg='black')
     text.place(relx=0.5, rely=0.4, anchor=CENTER)
     texto = mostra_estradas_transito()
+    text.insert(END, texto)
+    if int(x) == 1:
+        buttonVoltar = Button(root, text='Voltar', padx=117,
+                              pady=5, fg='white', bg='black', command=caminhoneiro)
+        buttonVoltar.place(relx=0.5, rely=0.8, anchor=CENTER)
+    else:
+        buttonVoltar = Button(root, text='Voltar', padx=117,
+                              pady=5, fg='white', bg='black', command=fiscal)
+        buttonVoltar.place(relx=0.5, rely=0.8, anchor=CENTER)
+
+
+def visualiza_transito_ruim(x):
+    global background
+    background.grid_forget()
+    background = Label(image=imag_1)
+    background.grid(row=1, column=0, columnspan=3)
+
+    text = Text(root, width=34, height=30, fg='snow', bg='black')
+    text.place(relx=0.5, rely=0.4, anchor=CENTER)
+    texto = mostra_estradas_transito_ruim()
     text.insert(END, texto)
     if int(x) == 1:
         buttonVoltar = Button(root, text='Voltar', padx=117,
@@ -527,9 +609,9 @@ def estradas_ativas_transito(x):
     estrada1 = Entry(root, width=26, fg='black', bg='White')
     estrada1.place(relx=0.5, rely=0.6, anchor=CENTER)
 
-    text = Text(root, width=70, height=1, fg='White', bg='black')
+    text = Text(root, width=80, height=1, fg='White', bg='black')
     text.place(relx=0.5, rely=0.65, anchor=CENTER)
-    texto = 'Digite a velocidade que foi verificada nesse trecho:'
+    texto = 'Digite a velocidade que foi verificada nesse trecho: (apenas o valor em km/h)'
     text.insert(END, texto)
     estrada2 = Entry(root, width=26, fg='black', bg='White')
     estrada2.place(relx=0.5, rely=0.7, anchor=CENTER)
@@ -733,13 +815,17 @@ def caminhoneiro():
                         pady=5, fg='white', bg='black', command=lambda: imprime_mapa())
     buttonMapa.place(relx=0.5, rely=0.4, anchor=CENTER)
 
-    buttonVisualizaTransito = Button(root, text='Consultar trânsito nas cidades', padx=117,
+    buttonVisualizaTransito = Button(root, text='Consultar trânsito nas estradas', padx=117,
                                      pady=5, fg='white', bg='black', command=lambda: visualiza_transito(1))
     buttonVisualizaTransito.place(relx=0.5, rely=0.5, anchor=CENTER)
 
+    buttonVisualizaTransitoRuim = Button(root, text='Consultar estradas com trânsito ruim', padx=117,
+                                         pady=5, fg='white', bg='black', command=lambda: visualiza_transito_ruim(1))
+    buttonVisualizaTransitoRuim.place(relx=0.5, rely=0.6, anchor=CENTER)
+
     buttonVoltar = Button(root, text='Voltar', padx=117,
                           pady=5, fg='white', bg='black', command=menu)
-    buttonVoltar.place(relx=0.5, rely=0.7, anchor=CENTER)
+    buttonVoltar.place(relx=0.5, rely=0.9, anchor=CENTER)
 
 
 def fiscal():
@@ -773,13 +859,17 @@ def fiscal():
                                  pady=5, fg='white', bg='black', command=lambda: estradas_ativas_transito(0))
     buttonEditaTransito.place(relx=0.5, rely=0.6, anchor=CENTER)
 
-    buttonVisualizaTransito = Button(root, text='Consultar trânsito nas cidades', padx=117,
+    buttonVisualizaTransito = Button(root, text='Consultar trânsito nas estradas', padx=117,
                                      pady=5, fg='white', bg='black', command=lambda: visualiza_transito(0))
     buttonVisualizaTransito.place(relx=0.5, rely=0.7, anchor=CENTER)
 
+    buttonVisualizaTransitoRuim = Button(root, text='Consultar estradas com trânsito ruim', padx=117,
+                                         pady=5, fg='white', bg='black', command=lambda: visualiza_transito_ruim(0))
+    buttonVisualizaTransitoRuim.place(relx=0.5, rely=0.8, anchor=CENTER)
+
     buttonVoltar = Button(root, text='Voltar', padx=117,
                           pady=5, fg='white', bg='black', command=menu)
-    buttonVoltar.place(relx=0.5, rely=0.8, anchor=CENTER)
+    buttonVoltar.place(relx=0.5, rely=0.9, anchor=CENTER)
 
 
 def menu():
