@@ -336,7 +336,7 @@ root.geometry('1000x800')
 root.config(background='White')
 root.resizable(width=False, height=False)
 
-imag_1 = Image.open('background2.jpg')
+imag_1 = Image.open('background3.jpg')
 
 imag_1 = ImageTk.PhotoImage(imag_1)
 
@@ -350,17 +350,17 @@ def estradas_ativas(x):
     background = Label(image=imag_1)
     background.grid(row=1, column=0, columnspan=3)
 
-    text = Text(root, width=30, height=30, fg='snow', bg='black')
+    text = Text(root, width=25, height=30, fg='white', bg='#228B22', font=24)
     text.place(relx=0.5, rely=0.4, anchor=CENTER)
     texto = mostra_estradas()
     text.insert(END, texto)
     if int(x) == 1:
-        buttonVoltar = Button(root, text='Voltar', padx=117,
-                              pady=5, fg='white', bg='black', command=caminhoneiro)
+        buttonVoltar = Button(root, text='Voltar', padx=30,
+                              pady=5, fg='black', bg='#A8A8A8', border=5, command=caminhoneiro)
         buttonVoltar.place(relx=0.5, rely=0.8, anchor=CENTER)
     else:
-        buttonVoltar = Button(root, text='Voltar', padx=117,
-                              pady=5, fg='white', bg='black', command=fiscal)
+        buttonVoltar = Button(root, text='Voltar', padx=30,
+                              pady=5, fg='black', bg='#A8A8A8', border=5, command=fiscal)
         buttonVoltar.place(relx=0.5, rely=0.8, anchor=CENTER)
 
 
@@ -371,23 +371,23 @@ def estradas_inativas(y):
     background.grid(row=1, column=0, columnspan=3)
 
     if int(y) == 1:
-        buttonVoltar = Button(root, text='Voltar', padx=117,
-                              pady=5, fg='white', bg='black', command=caminhoneiro)
+        buttonVoltar = Button(root, text='Voltar', padx=30,
+                              pady=5, fg='black', bg='#A8A8A8', border=5, command=caminhoneiro)
         buttonVoltar.place(relx=0.5, rely=0.8, anchor=CENTER)
     else:
-        buttonVoltar = Button(root, text='Voltar', padx=117,
-                              pady=5, fg='white', bg='black', command=fiscal)
+        buttonVoltar = Button(root, text='Voltar', padx=30,
+                              pady=5, fg='black', bg='#A8A8A8', border=5, command=fiscal)
         buttonVoltar.place(relx=0.5, rely=0.8, anchor=CENTER)
 
-    text = Text(root, width=30, height=30, fg='snow', bg='black')
+    text = Text(root, width=25, height=30, fg='white', bg='#228B22', font=24)
     text.place(relx=0.5, rely=0.4, anchor=CENTER)
     texto = mostra_estradas_inativas()
     text.insert(END, texto)
 
 
 def MyClick(atual, dest):
-    text = Text(root, width=90, height=2, fg='black', bg='White')
-    text.place(relx=0.5, rely=0.7, anchor=CENTER)
+    text = Text(root, width=90, height=2, fg='black', bg='#E0FFFF', font=24)
+    text.place(relx=0.5, rely=0.55, anchor=CENTER)
     texto = melhor_caminho(atual, dest)
     text.insert(END, texto)
 
@@ -398,47 +398,46 @@ def encontrar():
     background = Label(image=imag_1)
     background.grid(row=1, column=0, columnspan=3)
 
-    text = Text(root, width=41, height=2, fg='White', bg='black')
+    text = Text(root, width=34, height=2, fg='white', bg='#228B22', font=24)
     text.place(relx=0.5, rely=0.1, anchor=CENTER)
-    texto = '\t    Olá, Caminhoneiro!\nNo Brasil nós temos os seguintes estados:\n'
+    texto = 'No Brasil nós temos os seguintes estados:\n'
     text.insert(END, texto)
 
-    text = Text(root, width=90, height=2, fg='White', bg='black')
-    text.place(relx=0.5, rely=0.15, anchor=CENTER)
+    text = Text(root, width=82, height=1.5, fg='white', bg='#228B22', font=18)
+    text.place(relx=0.5, rely=0.17, anchor=CENTER)
     texto = pergunta_caminho()
     text.insert(END, texto)
 
-    text = Text(root, width=43, height=1, fg='White', bg='black')
-    text.place(relx=0.5, rely=0.26, anchor=CENTER)
+    text = Text(root, width=33, height=1, fg='white', bg='#228B22', font=16)
+    text.place(relx=0.3, rely=0.3, anchor=CENTER)
     texto = 'Insira o local de partida: (apenas a sigla)'
     text.insert(END, texto)
-    estado_atual = Entry(root, width=26, fg='black', bg='White')
-    estado_atual.place(relx=0.5, rely=0.3, anchor=CENTER)
+    estado_atual = Entry(root, width=10, fg='black', bg='#E0FFFF')
+    estado_atual.place(relx=0.3, rely=0.34, anchor=CENTER)
 
-    text = Text(root, width=43, height=1, fg='White', bg='black')
-    text.place(relx=0.5, rely=0.36, anchor=CENTER)
+    text = Text(root, width=34, height=1, fg='white', bg='#228B22', font=16)
+    text.place(relx=0.7, rely=0.3, anchor=CENTER)
     texto = 'Insira o local da chegada: (apenas a sigla)'
     text.insert(END, texto)
-    estado_destino = Entry(root, width=26, fg='black', bg='White')
-    estado_destino.place(relx=0.5, rely=0.4, anchor=CENTER)
+    estado_destino = Entry(root, width=10, fg='black', bg='#E0FFFF')
+    estado_destino.place(relx=0.7, rely=0.34, anchor=CENTER)
 
-    buttonConfirmar = Button(root, text='Confirmar', padx=117, pady=5, fg='white',
-                             bg='black', command=lambda: MyClick(estado_atual.get(), estado_destino.get()))
-    buttonConfirmar.place(relx=0.5, rely=0.5, anchor=CENTER)
+    buttonConfirmar = Button(root, text='Encontrar', padx=30, pady=5, fg='black', bg='#A8A8A8', border=5, command=lambda: MyClick(estado_atual.get(), estado_destino.get()))
+    buttonConfirmar.place(relx=0.5, rely=0.4, anchor=CENTER)
 
-    buttonVoltar = Button(root, text='Voltar', padx=117, pady=5,
-                          fg='white', bg='black', command=lambda: caminhoneiro())
+    buttonVoltar = Button(root, text='Voltar', padx=30, pady=5,
+                          fg='black', bg='#A8A8A8', border=5, command=lambda: caminhoneiro())
     buttonVoltar.place(relx=0.5, rely=0.8, anchor=CENTER)
 
 
 def MyClick1(atual):
-    text = Text(root, width=90, height=2, fg='White', bg='black')
-    text.place(relx=0.5, rely=0.7, anchor=CENTER)
+    text = Text(root, width=42, height=2, fg='black', bg='#E0FFFF')
+    text.place(relx=0.5, rely=0.73, anchor=CENTER)
     texto = pergunta_inativar(atual)
     text.insert(END, texto)
 
-    text = Text(root, width=30, height=20, fg='snow', bg='black')
-    text.place(relx=0.5, rely=0.30, anchor=CENTER)
+    text = Text(root, width=25, height=19, fg='white', bg='#228B22', font=18)
+    text.place(relx=0.5, rely=0.32, anchor=CENTER)
     texto = mostra_estradas()
     text.insert(END, texto)
 
@@ -449,40 +448,40 @@ def inativar():
     background = Label(image=imag_1)
     background.grid(row=1, column=0, columnspan=3)
 
-    text = Text(root, width=30, height=20, fg='snow', bg='black')
+    text = Text(root, width=25, height=20, fg='white', bg='#228B22', font=18)
     text.place(relx=0.5, rely=0.30, anchor=CENTER)
     texto = mostra_estradas()
     text.insert(END, texto)
 
-    text = Text(root, width=50, height=3, fg='White', bg='black')
+    text = Text(root, width=50, height=3, fg='white', bg='#228B22', font=24)
     text.place(relx=0.5, rely=0.05, anchor=CENTER)
-    texto = 'Há algum problema com as estradas?\nAqui você pode desativar uma delas.\nAtualmente temos as seguintes estradas funcionando:\n'
+    texto = '                Há algum problema com as estradas?\n                 Aqui você pode desativar uma delas.\n    Atualmente temos as seguintes estradas funcionando:\n'
     text.insert(END, texto)
 
-    text = Text(root, width=60, height=1, fg='White', bg='black')
-    text.place(relx=0.5, rely=0.55, anchor=CENTER)
+    text = Text(root, width=45, height=1, fg='white', bg='#228B22', font=16)
+    text.place(relx=0.5, rely=0.57, anchor=CENTER)
     texto = 'Digite o número da estrada que você deseja desativar:'
     text.insert(END, texto)
-    estrada = Entry(root, width=26, fg='black', bg='White')
+    estrada = Entry(root, width=10, fg='black', bg='#E0FFFF')
     estrada.place(relx=0.5, rely=0.6, anchor=CENTER)
 
-    buttonConfirmar = Button(root, text='Confirmar', padx=117, pady=5,
-                             fg='white', bg='black', command=lambda: MyClick1(estrada.get()))
+    buttonConfirmar = Button(root, text='Confirmar', padx=30, pady=5,
+                             fg='black', bg='#A8A8A8', border=5, command=lambda: MyClick1(estrada.get()))
     buttonConfirmar.place(relx=0.5, rely=0.65, anchor=CENTER)
 
-    buttonVoltar = Button(root, text='Voltar', padx=117, pady=5,
-                          fg='white', bg='black', command=lambda: fiscal())
+    buttonVoltar = Button(root, text='Voltar', padx=30, pady=5,
+                          fg='black', bg='#A8A8A8', border=5, command=lambda: fiscal())
     buttonVoltar.place(relx=0.5, rely=0.8, anchor=CENTER)
 
 
 def MyClick2(atual):
-    text = Text(root, width=90, height=2, fg='White', bg='black')
-    text.place(relx=0.5, rely=0.7, anchor=CENTER)
+    text = Text(root, width=41, height=2, fg='black', bg='#E0FFFF')
+    text.place(relx=0.5, rely=0.73, anchor=CENTER)
     texto = pergunta_ativar(atual)
     text.insert(END, texto)
 
-    text = Text(root, width=30, height=20, fg='snow', bg='black')
-    text.place(relx=0.5, rely=0.30, anchor=CENTER)
+    text = Text(root, width=25, height=19, fg='white', bg='#228B22', font=18)
+    text.place(relx=0.5, rely=0.32, anchor=CENTER)
     texto = mostra_estradas_inativas()
     text.insert(END, texto)
 
@@ -493,29 +492,29 @@ def reativar():
     background = Label(image=imag_1)
     background.grid(row=1, column=0, columnspan=3)
 
-    text = Text(root, width=30, height=20, fg='snow', bg='black')
+    text = Text(root, width=25, height=20, fg='white', bg='#228B22', font=18)
     text.place(relx=0.5, rely=0.30, anchor=CENTER)
     texto = mostra_estradas_inativas()
     text.insert(END, texto)
 
-    text = Text(root, width=50, height=3, fg='White', bg='black')
+    text = Text(root, width=50, height=3, fg='white', bg='#228B22', font=24)
     text.place(relx=0.5, rely=0.05, anchor=CENTER)
-    texto = 'Há alguma estrada restaurada?\nAqui você pode reativar uma delas.\nAtualmente temos as seguintes estradas desativadas:\n'
+    texto = '                 Há alguma estrada restaurada?\n                 Aqui você pode reativar uma delas.\n    Atualmente temos as seguintes estradas desativadas:\n'
     text.insert(END, texto)
 
-    text = Text(root, width=50, height=1, fg='White', bg='black')
-    text.place(relx=0.5, rely=0.55, anchor=CENTER)
+    text = Text(root, width=44, height=1, fg='white', bg='#228B22', font=16)
+    text.place(relx=0.5, rely=0.57, anchor=CENTER)
     texto = 'Digite o número da estrada que você deseja reativar:'
     text.insert(END, texto)
-    estrada = Entry(root, width=26, fg='black', bg='White')
+    estrada = Entry(root, width=10, fg='black', bg='#E0FFFF')
     estrada.place(relx=0.5, rely=0.6, anchor=CENTER)
 
-    buttonConfirmar = Button(root, text='Confirmar', padx=117, pady=5,
-                             fg='white', bg='black', command=lambda: MyClick2(estrada.get()))
+    buttonConfirmar = Button(root, text='Confirmar', padx=30, pady=5,
+                             fg='black', bg='#A8A8A8', border=5, command=lambda: MyClick2(estrada.get()))
     buttonConfirmar.place(relx=0.5, rely=0.65, anchor=CENTER)
 
-    buttonVoltar = Button(root, text='Voltar', padx=117, pady=5,
-                          fg='white', bg='black', command=lambda: fiscal())
+    buttonVoltar = Button(root, text='Voltar', padx=30, pady=5,
+                          fg='black', bg='#A8A8A8', border=5, command=lambda: fiscal())
     buttonVoltar.place(relx=0.5, rely=0.8, anchor=CENTER)
 
 
@@ -526,25 +525,30 @@ def caminhoneiro():
     background = Label(image=imag_1)
     background.grid(row=1, column=0, columnspan=3)
 
-    buttonEncontrar = Button(root, text='Encontrar a melhor rota para o meu destino',
-                             padx=117, pady=5, fg='black', bg='#A8A8A8', border=5, command=lambda: encontrar())
-    buttonEncontrar.place(relx=0.5, rely=0.1, anchor=CENTER)
+    text = Text(root, width=34, height=4, fg='white', bg='#228B22', font=90)
+    text.place(relx=0.5, rely=0.1, anchor=CENTER)
+    texto = '\n\t    Olá, Caminhoneiro!\n\tO que você deseja fazer?\n'
+    text.insert(END, texto)
 
-    buttonAtivas = Button(root, text='Saber quais estradas estão ativas', padx=117,
+    buttonEncontrar = Button(root, text='Encontrar a melhor rota',
+                             padx=30, pady=5, fg='black', bg='#A8A8A8', border=5, command=lambda: encontrar())
+    buttonEncontrar.place(relx=0.5, rely=0.3, anchor=CENTER)
+
+    buttonAtivas = Button(root, text='Ver estradas ativas', padx=42,
                           pady=5, fg='black', bg='#A8A8A8', border=5, command=lambda: estradas_ativas(1))
-    buttonAtivas.place(relx=0.5, rely=0.2, anchor=CENTER)
+    buttonAtivas.place(relx=0.5, rely=0.4, anchor=CENTER)
 
-    buttonInativas = Button(root, text='Saber quais estradas estão inativas', padx=117,
+    buttonInativas = Button(root, text='Ver estradas inativas', padx=36,
                             pady=5, fg='black', bg='#A8A8A8', border=5, command=lambda: estradas_inativas(1))
-    buttonInativas.place(relx=0.5, rely=0.3, anchor=CENTER)
+    buttonInativas.place(relx=0.5, rely=0.5, anchor=CENTER)
 
-    buttonMapa = Button(root, text='Ver um mapa com estradas atuais', padx=117,
+    buttonMapa = Button(root, text='Ver mapa com estradas atuais', padx=5,
                         pady=5, fg='black', bg='#A8A8A8', border=5, command=lambda: imprime_mapa())
-    buttonMapa.place(relx=0.5, rely=0.4, anchor=CENTER)
+    buttonMapa.place(relx=0.5, rely=0.6, anchor=CENTER)
 
-    buttonVoltar = Button(root, text='Voltar', padx=117,
+    buttonVoltar = Button(root, text='Voltar', padx=30,
                           pady=5, fg='black', bg='#A8A8A8', border=5, command=menu)
-    buttonVoltar.place(relx=0.5, rely=0.7, anchor=CENTER)
+    buttonVoltar.place(relx=0.5, rely=0.8, anchor=CENTER)
 
 
 def fiscal():
@@ -554,29 +558,34 @@ def fiscal():
     background = Label(image=imag_1)
     background.grid(row=1, column=0, columnspan=3)
 
-    buttonInativar = Button(root, text='Inativar uma estrada', padx=117,
+    text = Text(root, width=34, height=4, fg='white', bg='#228B22', font=90)
+    text.place(relx=0.5, rely=0.1, anchor=CENTER)
+    texto = '\n\t    Olá, Agente!\n\tO que você deseja fazer?\n'
+    text.insert(END, texto)
+
+    buttonInativar = Button(root, text='Inativar uma estrada', padx=30,
                             pady=5, fg='black', bg='#A8A8A8', border=5, command=lambda: inativar())
-    buttonInativar.place(relx=0.5, rely=0.1, anchor=CENTER)
+    buttonInativar.place(relx=0.5, rely=0.2, anchor=CENTER)
 
-    buttonReativar = Button(root, text='Reativar uma estrada', padx=117,
+    buttonReativar = Button(root, text='Reativar uma estrada', padx=30,
                             pady=5, fg='black', bg='#A8A8A8', border=5, command=lambda: reativar())
-    buttonReativar.place(relx=0.5, rely=0.2, anchor=CENTER)
+    buttonReativar.place(relx=0.5, rely=0.3, anchor=CENTER)
 
-    buttonAtivas = Button(root, text='Saber quais estradas estão ativas', padx=117,
+    buttonAtivas = Button(root, text='Ver estradas ativas', padx=34,
                           pady=5, fg='black', bg='#A8A8A8', border=5, command=lambda: estradas_ativas(0))
-    buttonAtivas.place(relx=0.5, rely=0.3, anchor=CENTER)
+    buttonAtivas.place(relx=0.5, rely=0.4, anchor=CENTER)
 
-    buttonInativas = Button(root, text='Saber quais estradas estão inativas', padx=117,
+    buttonInativas = Button(root, text='Ver estradas inativas', padx=30,
                             pady=5, fg='black', bg='#A8A8A8', border=5, command=lambda: estradas_inativas(0))
-    buttonInativas.place(relx=0.5, rely=0.4, anchor=CENTER)
+    buttonInativas.place(relx=0.5, rely=0.5, anchor=CENTER)
 
-    buttonMapa = Button(root, text='Ver um mapa com estradas atuais', padx=117,
+    buttonMapa = Button(root, text='Ver mapa com estradas atuais', padx=5,
                         pady=5, fg='black', bg='#A8A8A8', border=5, command=lambda: imprime_mapa())
-    buttonMapa.place(relx=0.5, rely=0.5, anchor=CENTER)
+    buttonMapa.place(relx=0.5, rely=0.6, anchor=CENTER)
 
-    buttonVoltar = Button(root, text='Voltar', padx=117,
+    buttonVoltar = Button(root, text='Voltar', padx=30,
                           pady=5, fg='black', bg='#A8A8A8', border=5, command=menu)
-    buttonVoltar.place(relx=0.5, rely=0.7, anchor=CENTER)
+    buttonVoltar.place(relx=0.5, rely=0.8, anchor=CENTER)
 
 
 def menu():
@@ -602,11 +611,11 @@ def menu():
 
     buttonCaminhoneiro = Button(root, text='Caminhoneiro', padx=30,
                                 pady=5, fg='black', bg='#A8A8A8', border=5, command=caminhoneiro)
-    buttonCaminhoneiro.place(relx=0.5, rely=0.6, anchor=CENTER)
+    buttonCaminhoneiro.place(relx=0.5, rely=0.55, anchor=CENTER)
 
-    buttonFiscal = Button(root, text='Fiscal do DER', padx=30,
+    buttonFiscal = Button(root, text='Fiscal do DER', padx=29,
                           pady=5, fg='black', bg='#A8A8A8', border=5, command=fiscal)
-    buttonFiscal.place(relx=0.5, rely=0.7, anchor=CENTER)
+    buttonFiscal.place(relx=0.5, rely=0.65, anchor=CENTER)
 
     buttonSaida = Button(root, text='Sair', padx=30, pady=5,
                          fg='black', bg='#A8A8A8', border=5, command=root.quit)
