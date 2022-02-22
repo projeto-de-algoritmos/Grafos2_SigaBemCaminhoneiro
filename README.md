@@ -1,4 +1,4 @@
-# Siga Bem Caminhoneiro
+# Siga Bem Caminhoneiro 2.0
 
 **Número da Lista**: 25<br>
 **Conteúdo da Disciplina**: Grafos 2<br>
@@ -11,7 +11,7 @@
 
 ## Apresentação
 
-Clique no link para assistir à apresentação: https://youtu.be/LRhwsSJiGTc
+Clique no link para assistir à apresentação: https://youtu.be/nEElgewGdWU
 
 ## Sobre 
 A ideia por trás deste projeto é aprimorar o projeto Siga Bem Caminhoneiro 1.0, criando novas funções de gerenciamento de estradas e geração de caminhos utilizando os conhecimentos adquiridos no módulo 2 de Grafos, principalmente, a utilização de pesos nas arestas.
