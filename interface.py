@@ -2,6 +2,7 @@ from tkinter import *
 from PIL import Image, ImageTk
 import networkx as nx
 import matplotlib.pyplot as plt
+import heapq
 
 # instancia o grafo
 Brasil = nx.DiGraph()
@@ -36,106 +37,106 @@ Brasil.add_node('SC')
 Brasil.add_node('RS')
 
 # adicionando as arestas
-Brasil.add_edge('RR', 'AM')
-Brasil.add_edge('RR', 'PA')
-Brasil.add_edge('AP', 'PA')
-Brasil.add_edge('AM', 'RR')
-Brasil.add_edge('AM', 'PA')
-Brasil.add_edge('AM', 'MT')
-Brasil.add_edge('AM', 'RO')
-Brasil.add_edge('AM', 'AC')
-Brasil.add_edge('RR', 'AM')
-Brasil.add_edge('RR', 'PA')
-Brasil.add_edge('PA', 'RR')
-Brasil.add_edge('PA', 'AP')
-Brasil.add_edge('PA', 'MA')
-Brasil.add_edge('PA', 'TO')
-Brasil.add_edge('PA', 'AM')
-Brasil.add_edge('PA', 'MT')
-Brasil.add_edge('MA', 'PA')
-Brasil.add_edge('MA', 'TO')
-Brasil.add_edge('MA', 'PI')
-Brasil.add_edge('PI', 'MA')
-Brasil.add_edge('PI', 'TO')
-Brasil.add_edge('PI', 'BA')
-Brasil.add_edge('PI', 'PE')
-Brasil.add_edge('PI', 'CE')
-Brasil.add_edge('CE', 'PI')
-Brasil.add_edge('CE', 'RN')
-Brasil.add_edge('CE', 'PB')
-Brasil.add_edge('CE', 'PE')
-Brasil.add_edge('RN', 'CE')
-Brasil.add_edge('RN', 'PB')
-Brasil.add_edge('PB', 'CE')
-Brasil.add_edge('PB', 'RN')
-Brasil.add_edge('PB', 'PE')
-Brasil.add_edge('PE', 'PB')
-Brasil.add_edge('PE', 'CE')
-Brasil.add_edge('PE', 'PI')
-Brasil.add_edge('PE', 'AL')
-Brasil.add_edge('PE', 'BA')
-Brasil.add_edge('AL', 'PE')
-Brasil.add_edge('AL', 'SE')
-Brasil.add_edge('AL', 'BA')
-Brasil.add_edge('SE', 'AL')
-Brasil.add_edge('SE', 'BA')
-Brasil.add_edge('BA', 'SE')
-Brasil.add_edge('BA', 'AL')
-Brasil.add_edge('BA', 'PE')
-Brasil.add_edge('BA', 'PI')
-Brasil.add_edge('BA', 'TO')
-Brasil.add_edge('BA', 'GO')
-Brasil.add_edge('BA', 'MG')
-Brasil.add_edge('BA', 'ES')
-Brasil.add_edge('TO', 'PA')
-Brasil.add_edge('TO', 'MA')
-Brasil.add_edge('TO', 'PI')
-Brasil.add_edge('TO', 'BA')
-Brasil.add_edge('TO', 'GO')
-Brasil.add_edge('TO', 'MT')
-Brasil.add_edge('MT', 'RO')
-Brasil.add_edge('MT', 'AM')
-Brasil.add_edge('MT', 'PA')
-Brasil.add_edge('MT', 'TO')
-Brasil.add_edge('MT', 'GO')
-Brasil.add_edge('MT', 'MS')
-Brasil.add_edge('RO', 'MT')
-Brasil.add_edge('RO', 'AM')
-Brasil.add_edge('RO', 'AC')
-Brasil.add_edge('AC', 'AM')
-Brasil.add_edge('AC', 'RO')
-Brasil.add_edge('GO', 'MT')
-Brasil.add_edge('GO', 'TO')
-Brasil.add_edge('GO', 'BA')
-Brasil.add_edge('GO', 'MG')
-Brasil.add_edge('GO', 'MS')
-Brasil.add_edge('MG', 'BA')
-Brasil.add_edge('MG', 'ES')
-Brasil.add_edge('MG', 'GO')
-Brasil.add_edge('MG', 'RJ')
-Brasil.add_edge('MG', 'SP')
-Brasil.add_edge('MG', 'MS')
-Brasil.add_edge('ES', 'BA')
-Brasil.add_edge('ES', 'MG')
-Brasil.add_edge('ES', 'RJ')
-Brasil.add_edge('RJ', 'ES')
-Brasil.add_edge('RJ', 'MG')
-Brasil.add_edge('RJ', 'SP')
-Brasil.add_edge('MS', 'MT')
-Brasil.add_edge('MS', 'GO')
-Brasil.add_edge('MS', 'MG')
-Brasil.add_edge('MS', 'SP')
-Brasil.add_edge('MS', 'PR')
-Brasil.add_edge('SP', 'RJ')
-Brasil.add_edge('SP', 'MG')
-Brasil.add_edge('SP', 'MS')
-Brasil.add_edge('SP', 'PR')
-Brasil.add_edge('PR', 'MS')
-Brasil.add_edge('PR', 'SP')
-Brasil.add_edge('PR', 'SC')
-Brasil.add_edge('SC', 'PR')
-Brasil.add_edge('SC', 'RS')
-Brasil.add_edge('RS', 'SC')
+Brasil.add_edge('RR', 'AM', weight=1)
+Brasil.add_edge('RR', 'PA', weight=1)
+Brasil.add_edge('AP', 'PA', weight=1)
+Brasil.add_edge('AM', 'RR', weight=1)
+Brasil.add_edge('AM', 'PA', weight=1)
+Brasil.add_edge('AM', 'MT', weight=1)
+Brasil.add_edge('AM', 'RO', weight=1)
+Brasil.add_edge('AM', 'AC', weight=1)
+Brasil.add_edge('RR', 'AM', weight=1)
+Brasil.add_edge('RR', 'PA', weight=1)
+Brasil.add_edge('PA', 'RR', weight=1)
+Brasil.add_edge('PA', 'AP', weight=1)
+Brasil.add_edge('PA', 'MA', weight=1)
+Brasil.add_edge('PA', 'TO', weight=1)
+Brasil.add_edge('PA', 'AM', weight=1)
+Brasil.add_edge('PA', 'MT', weight=1)
+Brasil.add_edge('MA', 'PA', weight=1)
+Brasil.add_edge('MA', 'TO', weight=1)
+Brasil.add_edge('MA', 'PI', weight=1)
+Brasil.add_edge('PI', 'MA', weight=1)
+Brasil.add_edge('PI', 'TO', weight=1)
+Brasil.add_edge('PI', 'BA', weight=1)
+Brasil.add_edge('PI', 'PE', weight=1)
+Brasil.add_edge('PI', 'CE', weight=1)
+Brasil.add_edge('CE', 'PI', weight=1)
+Brasil.add_edge('CE', 'RN', weight=1)
+Brasil.add_edge('CE', 'PB', weight=1)
+Brasil.add_edge('CE', 'PE', weight=1)
+Brasil.add_edge('RN', 'CE', weight=1)
+Brasil.add_edge('RN', 'PB', weight=1)
+Brasil.add_edge('PB', 'CE', weight=1)
+Brasil.add_edge('PB', 'RN', weight=1)
+Brasil.add_edge('PB', 'PE', weight=1)
+Brasil.add_edge('PE', 'PB', weight=1)
+Brasil.add_edge('PE', 'CE', weight=1)
+Brasil.add_edge('PE', 'PI', weight=1)
+Brasil.add_edge('PE', 'AL', weight=1)
+Brasil.add_edge('PE', 'BA', weight=1)
+Brasil.add_edge('AL', 'PE', weight=1)
+Brasil.add_edge('AL', 'SE', weight=1)
+Brasil.add_edge('AL', 'BA', weight=1)
+Brasil.add_edge('SE', 'AL', weight=1)
+Brasil.add_edge('SE', 'BA', weight=1)
+Brasil.add_edge('BA', 'SE', weight=1)
+Brasil.add_edge('BA', 'AL', weight=1)
+Brasil.add_edge('BA', 'PE', weight=1)
+Brasil.add_edge('BA', 'PI', weight=1)
+Brasil.add_edge('BA', 'TO', weight=1)
+Brasil.add_edge('BA', 'GO', weight=1)
+Brasil.add_edge('BA', 'MG', weight=1)
+Brasil.add_edge('BA', 'ES', weight=1)
+Brasil.add_edge('TO', 'PA', weight=1)
+Brasil.add_edge('TO', 'MA', weight=1)
+Brasil.add_edge('TO', 'PI', weight=1)
+Brasil.add_edge('TO', 'BA', weight=1)
+Brasil.add_edge('TO', 'GO', weight=1)
+Brasil.add_edge('TO', 'MT', weight=1)
+Brasil.add_edge('MT', 'RO', weight=1)
+Brasil.add_edge('MT', 'AM', weight=1)
+Brasil.add_edge('MT', 'PA', weight=1)
+Brasil.add_edge('MT', 'TO', weight=1)
+Brasil.add_edge('MT', 'GO', weight=1)
+Brasil.add_edge('MT', 'MS', weight=1)
+Brasil.add_edge('RO', 'MT', weight=1)
+Brasil.add_edge('RO', 'AM', weight=1)
+Brasil.add_edge('RO', 'AC', weight=1)
+Brasil.add_edge('AC', 'AM', weight=1)
+Brasil.add_edge('AC', 'RO', weight=1)
+Brasil.add_edge('GO', 'MT', weight=1)
+Brasil.add_edge('GO', 'TO', weight=1)
+Brasil.add_edge('GO', 'BA', weight=1)
+Brasil.add_edge('GO', 'MG', weight=1)
+Brasil.add_edge('GO', 'MS', weight=1)
+Brasil.add_edge('MG', 'BA', weight=1)
+Brasil.add_edge('MG', 'ES', weight=1)
+Brasil.add_edge('MG', 'GO', weight=1)
+Brasil.add_edge('MG', 'RJ', weight=1)
+Brasil.add_edge('MG', 'SP', weight=1)
+Brasil.add_edge('MG', 'MS', weight=1)
+Brasil.add_edge('ES', 'BA', weight=1)
+Brasil.add_edge('ES', 'MG', weight=1)
+Brasil.add_edge('ES', 'RJ', weight=1)
+Brasil.add_edge('RJ', 'ES', weight=1)
+Brasil.add_edge('RJ', 'MG', weight=1)
+Brasil.add_edge('RJ', 'SP', weight=1)
+Brasil.add_edge('MS', 'MT', weight=1)
+Brasil.add_edge('MS', 'GO', weight=1)
+Brasil.add_edge('MS', 'MG', weight=1)
+Brasil.add_edge('MS', 'SP', weight=1)
+Brasil.add_edge('MS', 'PR', weight=1)
+Brasil.add_edge('SP', 'RJ', weight=1)
+Brasil.add_edge('SP', 'MG', weight=1)
+Brasil.add_edge('SP', 'MS', weight=1)
+Brasil.add_edge('SP', 'PR', weight=1)
+Brasil.add_edge('PR', 'MS', weight=1)
+Brasil.add_edge('PR', 'SP', weight=1)
+Brasil.add_edge('PR', 'SC', weight=1)
+Brasil.add_edge('SC', 'PR', weight=1)
+Brasil.add_edge('SC', 'RS', weight=1)
+Brasil.add_edge('RS', 'SC', weight=1)
 
 estados = list(Brasil.nodes)
 estados.sort()
@@ -161,7 +162,58 @@ def retorna_nome_estado(cod):
     return estado
 
 
+def dijkstra(grafo, origem, destino):
+
+    INF = ((1 << 63) - 1)//2
+    antecessor = {i: i for i in grafo}
+    distancia = {i: INF for i in grafo}
+    distancia[origem] = 0
+
+    PQ = []
+    heapq.heappush(PQ, [distancia[origem], origem])
+
+    while(PQ):
+
+        u = heapq.heappop(PQ)
+        u_dist = u[0]
+        u_id = u[1]
+
+        if u_dist == distancia[u_id]:
+
+            for v in grafo[u_id]:
+
+                v_id = v[0]
+                w_uv = v[1]
+
+                if distancia[u_id] + w_uv < distancia[v_id]:
+
+                    distancia[v_id] = distancia[u_id] + w_uv
+                    heapq.heappush(PQ, [distancia[v_id], v_id])
+                    antecessor[v_id] = u_id
+
+    if distancia[destino] == INF:
+
+        caminho = str("Não há caminho entre", origem, "e", destino)
+        return caminho
+
+    else:
+
+        st = []
+        no = destino
+
+        while(True):
+
+            st.append(str(no))
+            if(no == antecessor[no]):
+                break
+            no = antecessor[no]
+
+        caminho = st[::-1]
+        return caminho
+
+
 def bfs(grafo, inicio, fim):
+
     explorado = []
     fila = [[inicio]]
     if inicio == fim:
@@ -192,10 +244,36 @@ def estados_ligados(estado):
 
 def imprime_mapa():
 
-    nx.draw_spring(Brasil, with_labels=1, node_size=300, font_size=8, width=2, style="solid", node_color="green",
-                   font_color="white", font_weight="bold", edge_color="gray")
+    fluxo_livre = [(u, v)
+                   for (u, v, d) in Brasil.edges(data=True) if d["weight"] == 1]
+    moderado = [(u, v)
+                for (u, v, d) in Brasil.edges(data=True) if d["weight"] == 1.6]
+    pesado = [(u, v)
+              for (u, v, d) in Brasil.edges(data=True) if d["weight"] == 2.5]
+    congestionamento = [(u, v) for (u, v, d) in Brasil.edges(
+        data=True) if d["weight"] == 5]
+
+    pos = nx.spring_layout(Brasil, seed=9)  # melhores: 3, 9, 20
+
+    nx.draw_networkx_nodes(Brasil, pos, node_size=300, node_color="gray")
+
+    nx.draw_networkx_edges(Brasil, pos, edgelist=fluxo_livre,
+                           width=2, alpha=1, edge_color="green", style="solid", connectionstyle="arc3, rad=0.05")
+    nx.draw_networkx_edges(Brasil, pos, edgelist=moderado,
+                           width=2, alpha=1, edge_color="yellow", style="solid", connectionstyle="arc3, rad=0.05")
+    nx.draw_networkx_edges(Brasil, pos, edgelist=pesado,
+                           width=2, alpha=1, edge_color="orange", style="solid", connectionstyle="arc3, rad=0.05")
+    nx.draw_networkx_edges(Brasil, pos, edgelist=congestionamento,
+                           width=2, alpha=1, edge_color="red", style="solid", connectionstyle="arc3, rad=0.05")
+
+    nx.draw_networkx_labels(Brasil, pos, font_size=10,
+                            font_family="sans-serif", font_weight="bold")
+
+    ax = plt.gca()
+    ax.margins(0.08)
+    plt.axis("off")
+    plt.tight_layout()
     plt.show()
-    return
 
 
 lista_estradas_inativas = []
@@ -205,6 +283,25 @@ def inativa_estrada(estado1, estado2):
     Brasil.remove_edge(estado1, estado2)
     lista_estradas_inativas.append({'estado1': estado1, 'estado2': estado2})
     return
+
+
+def traduz_transito(peso):
+
+    if peso == 1:
+        resposta = str('Fluxo livre')
+        return resposta
+    elif peso == 1.6:
+        resposta = str('Trânsito mediano')
+        return resposta
+    elif peso == 2.5:
+        resposta = str('Trânsito pesado')
+        return resposta
+    elif peso == 5:
+        resposta = str('Congestionamento')
+        return resposta
+    else:
+        resposta = str('Número errado')
+        return resposta
 
 
 def mostra_estradas_inativas():
@@ -224,22 +321,23 @@ def melhor_caminho(estado_1, estado_2):
 
     malha_rodoviaria = {}
 
-    estradas = list(Brasil.edges)
+    estradas = list(Brasil.edges.data())
 
     for i in range(len(estradas)):
 
         estado1 = estradas[i][0]
         estado2 = estradas[i][1]
+        peso = estradas[i][2]['weight']
         cod_estado1 = retorna_cod_estado(estado1)
         cod_estado2 = retorna_cod_estado(estado2)
         if cod_estado1 not in malha_rodoviaria:
             malha_rodoviaria[cod_estado1] = []
 
-        malha_rodoviaria[cod_estado1].append(cod_estado2)
+        malha_rodoviaria[cod_estado1].append((cod_estado2, peso))
 
     lista_final = []
     lista_final.append('O melhor caminho para você utilizar é: ')
-    caminho = bfs(malha_rodoviaria, retorna_cod_estado(
+    caminho = dijkstra(malha_rodoviaria, retorna_cod_estado(
         estado_1), retorna_cod_estado(estado_2))
 
     for i in range(len(caminho)):
@@ -270,6 +368,7 @@ def pergunta_caminho():
 
 
 def mostra_estradas():
+
     lista_estradas = list(Brasil.edges)
 
     if len(lista_estradas) == 0:
@@ -279,8 +378,93 @@ def mostra_estradas():
     lista_final.append('Estradas ativas:\n')
     for i in range(len(lista_estradas)):
         lista_final.append(str(i) + '. ' +
-                           str(lista_estradas[i][0]) + ' - ' + str(lista_estradas[i][1]))
+                           str(lista_estradas[i][0]) + ' -> ' + str(lista_estradas[i][1]))
     lista_final = ('\n'.join(lista_final))
+    return lista_final
+
+
+def mostra_estradas_transito():
+
+    lista_estradas = list(Brasil.edges.data())
+
+    if len(lista_estradas) == 0:
+        return '\nNão há estradas ativas.\n'
+
+    lista_final = []
+    lista_final.append('Estradas ativas:\n')
+    for i in range(len(lista_estradas)):
+        lista_final.append(str(i) + '. ' +
+                           str(lista_estradas[i][0]) + ' -> ' + str(lista_estradas[i][1]) + ' - ' + str(traduz_transito(lista_estradas[i][2]['weight'])))
+    lista_final = ('\n'.join(lista_final))
+    return lista_final
+
+
+def mostra_estradas_transito_ruim():
+
+    lista_estradas = list(Brasil.edges.data())
+
+    if len(lista_estradas) == 0:
+        return '\nNão há estradas ativas.\n'
+
+    lista_final = []
+    lista_final.append('Estradas ativas:\n')
+    for i in range(len(lista_estradas)):
+        if lista_estradas[i][2]['weight'] > 1:
+            lista_final.append(str(i) + '. ' + str(lista_estradas[i][0]) + ' -> ' + str(
+                lista_estradas[i][1]) + ' - ' + str(traduz_transito(lista_estradas[i][2]['weight'])))
+
+    if len(lista_final) > 1:
+        lista_final = ('\n'.join(lista_final))
+        return lista_final
+
+    else:
+        lista_final = str(
+            'Neste momento não há estradas com trânsito ruim! :D')
+        return lista_final
+
+
+def sinaliza_transito(estado1, estado2, velo):
+    Brasil.remove_edge(estado1, estado2)
+
+    if int(velo) >= 100:
+        velocidade = 1
+    elif int(velo) >= 60 and int(velo) < 100:
+        velocidade = 1.6
+    elif int(velo) >= 40 and int(velo) < 60:
+        velocidade = 2.5
+    elif int(velo) < 40:
+        velocidade = 5
+
+    Brasil.add_edge(estado1, estado2, weight=velocidade)
+    return
+
+
+def pergunta_sinalizar_transito(x, velocidade):
+
+    lista_estradas = list(Brasil.edges.data())
+    cod_estrada = int(x)
+
+    if(int(x) > len(lista_estradas) or int(x) < 0):
+        return 'Não existe essa estrada! Digite um número listado.'
+
+    estado_origem = lista_estradas[cod_estrada][0]
+    estado_final = lista_estradas[cod_estrada][1]
+    lista_final = []
+
+    sinaliza_transito(estado_origem, estado_final, velocidade)
+
+    if int(velocidade) >= 100:
+        velo = 1
+    elif int(velocidade) >= 60 and int(velocidade) < 100:
+        velo = 1.6
+    elif int(velocidade) >= 40 and int(velocidade) < 60:
+        velo = 2.5
+    elif int(velocidade) < 40:
+        velo = 5
+
+    lista_final.append('\n' + str(traduz_transito(velo)) + '(' + str(velocidade) + ' km/h) foi sinalizado na estrada que liga ' + estado_origem +
+                       ' a ' + estado_final + '.\n')
+    lista_final = (''.join(lista_final))
     return lista_final
 
 
@@ -360,6 +544,85 @@ def estradas_ativas(x):
         buttonVoltar = Button(root, text='Voltar', padx=117,
                               pady=5, fg='white', bg='black', command=fiscal)
         buttonVoltar.place(relx=0.5, rely=0.8, anchor=CENTER)
+
+
+def visualiza_transito(x):
+    global background
+    background.grid_forget()
+    background = Label(image=imag_1)
+    background.grid(row=1, column=0, columnspan=3)
+
+    text = Text(root, width=31, height=30, fg='snow', bg='black')
+    text.place(relx=0.5, rely=0.4, anchor=CENTER)
+    texto = mostra_estradas_transito()
+    text.insert(END, texto)
+    if int(x) == 1:
+        buttonVoltar = Button(root, text='Voltar', padx=117,
+                              pady=5, fg='white', bg='black', command=caminhoneiro)
+        buttonVoltar.place(relx=0.5, rely=0.8, anchor=CENTER)
+    else:
+        buttonVoltar = Button(root, text='Voltar', padx=117,
+                              pady=5, fg='white', bg='black', command=fiscal)
+        buttonVoltar.place(relx=0.5, rely=0.8, anchor=CENTER)
+
+
+def visualiza_transito_ruim(x):
+    global background
+    background.grid_forget()
+    background = Label(image=imag_1)
+    background.grid(row=1, column=0, columnspan=3)
+
+    text = Text(root, width=34, height=30, fg='snow', bg='black')
+    text.place(relx=0.5, rely=0.4, anchor=CENTER)
+    texto = mostra_estradas_transito_ruim()
+    text.insert(END, texto)
+    if int(x) == 1:
+        buttonVoltar = Button(root, text='Voltar', padx=117,
+                              pady=5, fg='white', bg='black', command=caminhoneiro)
+        buttonVoltar.place(relx=0.5, rely=0.8, anchor=CENTER)
+    else:
+        buttonVoltar = Button(root, text='Voltar', padx=117,
+                              pady=5, fg='white', bg='black', command=fiscal)
+        buttonVoltar.place(relx=0.5, rely=0.8, anchor=CENTER)
+
+
+def estradas_ativas_transito(x):
+    global background
+    background.grid_forget()
+    background = Label(image=imag_1)
+    background.grid(row=1, column=0, columnspan=3)
+
+    text = Text(root, width=30, height=20, fg='snow', bg='black')
+    text.place(relx=0.5, rely=0.30, anchor=CENTER)
+    texto = mostra_estradas_transito()
+    text.insert(END, texto)
+
+    text = Text(root, width=51, height=3, fg='White', bg='black')
+    text.place(relx=0.5, rely=0.05, anchor=CENTER)
+    texto = 'O trânsito está parado ou voltou a andar?\nAqui você pode sinalizar aos usuários.\nVerifique como está o trânsito nas nossas estradas:\n'
+    text.insert(END, texto)
+
+    text = Text(root, width=70, height=1, fg='White', bg='black')
+    text.place(relx=0.5, rely=0.55, anchor=CENTER)
+    texto = 'Digite o número da estrada em que você deseja sinalizar o trânsito:'
+    text.insert(END, texto)
+    estrada1 = Entry(root, width=26, fg='black', bg='White')
+    estrada1.place(relx=0.5, rely=0.6, anchor=CENTER)
+
+    text = Text(root, width=80, height=1, fg='White', bg='black')
+    text.place(relx=0.5, rely=0.65, anchor=CENTER)
+    texto = 'Digite a velocidade que foi verificada nesse trecho: (apenas o valor em km/h)'
+    text.insert(END, texto)
+    estrada2 = Entry(root, width=26, fg='black', bg='White')
+    estrada2.place(relx=0.5, rely=0.7, anchor=CENTER)
+
+    buttonConfirmar = Button(root, text='Confirmar', padx=117, pady=5,
+                             fg='white', bg='black', command=lambda: MyClick3(estrada1.get(), estrada2.get()))
+    buttonConfirmar.place(relx=0.5, rely=0.75, anchor=CENTER)
+
+    buttonVoltar = Button(root, text='Voltar', padx=117, pady=5,
+                          fg='white', bg='black', command=lambda: fiscal())
+    buttonVoltar.place(relx=0.5, rely=0.9, anchor=CENTER)
 
 
 def estradas_inativas(y):
@@ -485,6 +748,18 @@ def MyClick2(atual):
     text.insert(END, texto)
 
 
+def MyClick3(atual, peso):
+    text = Text(root, width=92, height=2, fg='White', bg='black')
+    text.place(relx=0.5, rely=0.75, anchor=CENTER)
+    texto = pergunta_sinalizar_transito(atual, peso)
+    text.insert(END, texto)
+
+    text = Text(root, width=30, height=20, fg='snow', bg='black')
+    text.place(relx=0.5, rely=0.30, anchor=CENTER)
+    texto = mostra_estradas_transito()
+    text.insert(END, texto)
+
+
 def reativar():
     global background
     background.grid_forget()
@@ -540,9 +815,17 @@ def caminhoneiro():
                         pady=5, fg='white', bg='black', command=lambda: imprime_mapa())
     buttonMapa.place(relx=0.5, rely=0.4, anchor=CENTER)
 
+    buttonVisualizaTransito = Button(root, text='Consultar trânsito nas estradas', padx=117,
+                                     pady=5, fg='white', bg='black', command=lambda: visualiza_transito(1))
+    buttonVisualizaTransito.place(relx=0.5, rely=0.5, anchor=CENTER)
+
+    buttonVisualizaTransitoRuim = Button(root, text='Consultar estradas com trânsito ruim', padx=117,
+                                         pady=5, fg='white', bg='black', command=lambda: visualiza_transito_ruim(1))
+    buttonVisualizaTransitoRuim.place(relx=0.5, rely=0.6, anchor=CENTER)
+
     buttonVoltar = Button(root, text='Voltar', padx=117,
                           pady=5, fg='white', bg='black', command=menu)
-    buttonVoltar.place(relx=0.5, rely=0.7, anchor=CENTER)
+    buttonVoltar.place(relx=0.5, rely=0.9, anchor=CENTER)
 
 
 def fiscal():
@@ -572,9 +855,21 @@ def fiscal():
                         pady=5, fg='white', bg='black', command=lambda: imprime_mapa())
     buttonMapa.place(relx=0.5, rely=0.5, anchor=CENTER)
 
+    buttonEditaTransito = Button(root, text='Informar trânsito em alguma estrada', padx=117,
+                                 pady=5, fg='white', bg='black', command=lambda: estradas_ativas_transito(0))
+    buttonEditaTransito.place(relx=0.5, rely=0.6, anchor=CENTER)
+
+    buttonVisualizaTransito = Button(root, text='Consultar trânsito nas estradas', padx=117,
+                                     pady=5, fg='white', bg='black', command=lambda: visualiza_transito(0))
+    buttonVisualizaTransito.place(relx=0.5, rely=0.7, anchor=CENTER)
+
+    buttonVisualizaTransitoRuim = Button(root, text='Consultar estradas com trânsito ruim', padx=117,
+                                         pady=5, fg='white', bg='black', command=lambda: visualiza_transito_ruim(0))
+    buttonVisualizaTransitoRuim.place(relx=0.5, rely=0.8, anchor=CENTER)
+
     buttonVoltar = Button(root, text='Voltar', padx=117,
                           pady=5, fg='white', bg='black', command=menu)
-    buttonVoltar.place(relx=0.5, rely=0.7, anchor=CENTER)
+    buttonVoltar.place(relx=0.5, rely=0.9, anchor=CENTER)
 
 
 def menu():
