@@ -518,7 +518,7 @@ root.geometry('1000x800')
 root.config(background='White')
 root.resizable(width=False, height=False)
 
-imag_1 = Image.open('background3.jpg')
+imag_1 = Image.open('background.jpg')
 
 imag_1 = ImageTk.PhotoImage(imag_1)
 
